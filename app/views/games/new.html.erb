@@ -1,0 +1,16 @@
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0;">
+  <h1 style="font-size: 2rem; color: #4CAF50; border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; background-color: #f0f0f0; ">New game 🚀</h1>
+  <div class ="letters-container" style="padding: 40px;">
+    <% @letters.each do |letter| %>
+    <span class="letter" style="font-size: 2rem; color: #4CAF50; border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; background-color: #f0f0f0; "><%= letter.capitalize %></span>
+    <% end %>
+  </div>
+  <div>
+  <div>
+    <%= form_with url: "/score", method: :post, data: { turbo: false } do %>
+      <%= text_field_tag :suggestion, nil, placeholder: "Your suggestion" %>
+      <%= hidden_field_tag :letters, @letters %>
+      <%= submit_tag "Submit" %>
+    <% end %>
+  </div>
+</div>

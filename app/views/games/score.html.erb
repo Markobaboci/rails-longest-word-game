@@ -1,0 +1,24 @@
+<h1>Your guess: <%= @suggestion %></h1>
+<% @suggestion_array = @suggestion.chars %>
+<h1>The array provided by the program: <%= @letters_array %></h1>
+
+<% require 'net/http' %>
+<% require 'json' %>
+
+<% # Construct the URL with the user's suggestion %>
+<% url = URI("https://dictionary.lewagon.com/#{@suggestion}") %>
+
+<% # Make the HTTP request and parse the JSON response %>
+<% response = Net::HTTP.get(url) %>
+<% parsed_data = JSON.parse(response) %>
+
+<% # Check if the word can be formed and if it is a valid English word %>
+<% if @suggestion_array.all? { |element| @letters_array.include?(element) } %>
+  <% if parsed_data['found'] %>
+    <h2>The word is valid and can be built from the grid ✅</h2>
+  <% else %>
+    <h2>The word is not a valid English word ❌</h2>
+  <% end %>
+<% else %>
+  <h2>The word can’t be built out of the original grid ❌</h2>
+<% end %>
